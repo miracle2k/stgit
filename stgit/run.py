@@ -109,7 +109,8 @@ class Run:
             p = subprocess.Popen(self.__cmd, env = self.__env, cwd = self.__cwd,
                                  stdin = subprocess.PIPE,
                                  stdout = subprocess.PIPE,
-                                 stderr = subprocess.PIPE)
+                                 stderr = subprocess.PIPE,
+                                 shell=True)
             # TODO: only use communicate() once support for Python 2.4 is
             # dropped (write() needed because of performance reasons)
             if self.__indata:
@@ -128,7 +129,7 @@ class Run:
         assert self.__indata == None
         self.__log_start()
         try:
-            p = subprocess.Popen(self.__cmd, env = self.__env, cwd = self.__cwd)
+            p = subprocess.Popen(self.__cmd, env = self.__env, cwd = self.__cwd, shell=True)
             self.exitcode = p.wait()
         except OSError, e:
             raise self.exc('%s failed: %s' % (self.__cmd[0], e))
